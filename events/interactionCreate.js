@@ -1,8 +1,11 @@
 const { Events, MessageFlags, Collection } = require('discord.js');
+const log4js = require('log4js');
+
+const logger = log4js.getLogger('okazu-bot');
 
 module.exports = {
   name: Events.InteractionCreate,
-  async execute(logger, interaction) {
+  async execute(interaction) {
     if (!interaction.isChatInputCommand()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);
@@ -36,7 +39,7 @@ module.exports = {
     setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
 
     try {
-      await command.execute(logger, interaction);
+      await command.execute(interaction);
     } catch (error) {
       logger.error(error);
       if (interaction.replied || interaction.deferred) {

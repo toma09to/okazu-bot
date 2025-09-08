@@ -1,7 +1,10 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const log4js = require('log4js');
 
-module.exports = function(logger) {
+const logger = log4js.getLogger('okazu-bot');
+
+module.exports = function() {
   const commands = [];
 
   const foldersPath = path.join(__dirname, 'commands');

@@ -6,17 +6,19 @@ const log4js = require('log4js');
 const grabCommands = require('./grabCommands');
 
 log4js.configure({
-  appenders: { out: { type: "stdout" } },
-  categories: { default: { appenders: ["out"], level: "all" } },
+  appenders: { out: { type: 'stdout' } },
+  categories: {
+    default: { appenders: ['out'], level: 'all' },
+    'okazu-bot': { appenders: ['out'], level: 'all'},
+  },
 });
-const logger = log4js.getLogger();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
 client.cooldowns = new Collection();
 
-const commands = grabCommands(logger);
+const commands = grabCommands();
 for (const command of commands) {
   client.commands.set(command.data.name, command);
 }
@@ -28,9 +30,9 @@ for (const file of eventFiles) {
   const filePath = path.join(eventsPath, file);
   const event = require(filePath);
   if (event.once) {
-    client.once(event.name, (...args) => event.execute(logger, ...args));
+    client.once(event.name, (...args) => event.execute(...args));
   } else {
-    client.on(event.name, (...args) => event.execute(logger, ...args));
+    client.on(event.name, (...args) => event.execute(...args));
   }
 }
 

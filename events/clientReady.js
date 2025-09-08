@@ -1,11 +1,14 @@
 const { Events, REST, Routes } = require('discord.js');
+const log4js = require('log4js');
 const { token, clientId, guildId } = require('../config.json');
 const grabCommands = require('../grabCommands');
+
+const logger = log4js.getLogger('okazu-bot');
 
 module.exports = {
   name: Events.ClientReady,
   once: true,
-  execute(logger, client) {
+  execute(client) {
     logger.info(`Logged in as ${client.user.tag}`);
 
     // Deploys all application commands when a bot is ready
