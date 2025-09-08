@@ -10,9 +10,9 @@ module.exports = {
     .setName('ping')
     .setDescription('For connectivity test.'),
   async execute(interaction) {
-    const response = getMessage('pong', interaction.locale);
+    const response = getMessage('pong')[interaction.locale];
 
-    await interaction.reply({ content: response, flags: MessageFlags.Ephemeral });
+    await interaction.reply({ content: response ?? 'Pong!', flags: MessageFlags.Ephemeral });
     logger.debug('Executed /ping');
   },
 };

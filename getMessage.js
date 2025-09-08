@@ -9,17 +9,14 @@ const messages = {
   'ja': yaml.load(fs.readFileSync('messages/ja.yml'), 'utf-8'),
 };
 
-module.exports = function(messageId, locale) {
+module.exports = function(messageId) {
   for (const loc of Object.keys(messages)) {
     if (!messages[loc][messageId]) {
       logger.warn(`Message '${messageId}' was not found in ${loc}.yml.`);
     }
   }
 
-  if (locale in messages === false) {
-    // Default language is Japanese
-    locale = 'ja';
-  }
-
-  return messages[locale][messageId];
+  return Object.fromEntries(
+    Object.entries(messages).map(([key, val]) => [key, val[messageId]])
+  );
 }
