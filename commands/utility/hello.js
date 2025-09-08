@@ -13,7 +13,9 @@ module.exports = {
   async execute(interaction) {
     const response = getMessage('hello')[interaction.locale];
 
-    await interaction.reply({ content: response ?? 'Hello!', flags: MessageFlags.Ephemeral });
+    // Defer the reply to avoid Unknown interaction error.
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+    await interaction.followUp(response ?? 'Hello!');
     logger.debug('Executed /hello');
   },
 };
