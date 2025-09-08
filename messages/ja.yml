@@ -1,1 +1,2 @@
-pong: 'Pong!'
+hello: 'こんにちは。'
+helloDescription: '挨拶をします。'
