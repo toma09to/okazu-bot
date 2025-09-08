@@ -22,4 +22,4 @@ module.exports = function(logger) {
   }
 
   return commands;
-}
+};

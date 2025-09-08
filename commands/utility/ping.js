@@ -1,4 +1,5 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const getMessage = require('../../getMessage');
 
 module.exports = {
   cooldown: 5,
@@ -6,7 +7,9 @@ module.exports = {
     .setName('ping')
     .setDescription('For connectivity test.'),
   async execute(logger, interaction) {
-    await interaction.reply('Pong!');
+    const response = getMessage(logger, 'pong', interaction.locale);
+
+    await interaction.reply({ content: response, flags: MessageFlags.Ephemeral });
     logger.debug('Executed /ping');
   },
 };
