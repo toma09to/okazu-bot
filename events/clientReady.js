@@ -8,6 +8,7 @@ module.exports = {
   execute(logger, client) {
     logger.info(`Logged in as ${client.user.tag}`);
 
+    // Deploys all application commands when a bot is ready
     const commands = grabCommands(logger).map(command => command.data.toJSON());
 
     const rest = new REST().setToken(token);
