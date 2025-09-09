@@ -1,5 +1,6 @@
 error: "**There was an error while executing this command!**"
 wrongChannel: "**Please enter the command on the specified channel.**"
+wrongType: "**Please send an image file.**"
 hello: "Hello."
 helloDescription: "Greet you with a reply."
 addOkazu: "Added a jerk-off material successfully."

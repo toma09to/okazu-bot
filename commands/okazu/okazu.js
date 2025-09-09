@@ -34,6 +34,8 @@ module.exports = {
 
     const errorMessage = getMessage('error')[interaction.locale]
       ?? 'There was an error while executing this command!';
+    const wrongTypeMessage = getMessage('noImage')[interaction.locale]
+      ?? 'Please send an image file!'
     const addingMessage = getMessage('addOkazu')[interaction.locale]
       ?? 'Added a jerk-off material successfully!';
     const showingMessage = getMessage('showOkazu')[interaction.locale]
@@ -45,22 +47,33 @@ module.exports = {
     if (subCommand === 'add') {
       const attachment = interaction.options.getAttachment('image');
 
-      const imageResponse = await fetch(attachment.attachment);
-      const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
+      if (
+        !attachment.name.endsWith('.gif')
+        && !attachment.name.endsWith('.jpg')
+        && !attachment.name.endsWith('.jpeg')
+        && !attachment.name.endsWith('.png')
+        && !attachment.name.endsWith('.webp')
+      ) {
+        // A file attached is not an image file
+        logger.info(`A file sent by ${interaction.user.username} is not an image file.`);
+        await interaction.editReply(wrongTypeMessage);
+      } else {
+        const imageResponse = await fetch(attachment.attachment);
+        const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
 
-      db.run(
-        'INSERT INTO images (name, data) VALUES (?, ?)',
-        [attachment.name, imageBuffer],
-        async err => {
-          if (err) {
-            logger.error(err);
-            await interaction.editReply(errorMessage);
-          } else {
-            await interaction.editReply(addingMessage);
-          }
-      });
-
-      logger.info(`An okazu was added successfully by ${interaction.user.username}.`);
+        db.run(
+          'INSERT INTO images (name, data) VALUES (?, ?)',
+          [attachment.name, imageBuffer],
+          async err => {
+            if (err) {
+              logger.error(err);
+              await interaction.editReply(errorMessage);
+            } else {
+              await interaction.editReply(addingMessage);
+              logger.info(`An okazu was added successfully by ${interaction.user.username}.`);
+            }
+        });
+      }
     } else if (subCommand === 'show') {
       db.get('SELECT name, data FROM images ORDER BY RANDOM() LIMIT 1', async (err, row) => {
         if (err) {
