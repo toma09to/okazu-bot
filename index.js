@@ -16,7 +16,6 @@ log4js.configure({
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
-client.cooldowns = new Collection();
 
 const commands = grabCommands();
 for (const command of commands) {
