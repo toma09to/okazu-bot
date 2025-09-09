@@ -34,7 +34,7 @@ module.exports = {
 
     const errorMessage = getMessage('error')[interaction.locale]
       ?? 'There was an error while executing this command!';
-    const wrongTypeMessage = getMessage('noImage')[interaction.locale]
+    const wrongTypeMessage = getMessage('wrontType')[interaction.locale]
       ?? 'Please send an image file!'
     const addingMessage = getMessage('addOkazu')[interaction.locale]
       ?? 'Added a jerk-off material successfully!';
