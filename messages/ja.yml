@@ -1,3 +1,7 @@
-error: '**コマンドの実行中にエラーが発生しました！**'
-hello: 'こんにちは。'
-helloDescription: '挨拶をします。'
+error: "**コマンドの実行中にエラーが発生しました！**"
+wrongChannel: "**指定したチャンネルでコマンドを入力してください。**"
+hello: "こんにちは。"
+helloDescription: "挨拶をします。"
+addOkazu: "おかずの追加に成功しました。"
+showOkazu: "今日のおかずを提供します。"
+noOkazu: "おかずが見つかりませんでした。`/okazu add`でおかずを追加してください。"

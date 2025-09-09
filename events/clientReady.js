@@ -1,5 +1,6 @@
 const { Events, REST, Routes } = require('discord.js');
 const log4js = require('log4js');
+const sqlite3 = require('sqlite3');
 const { token, clientId, guildId } = require('../config.json');
 
 const logger = log4js.getLogger('okazu-bot');
@@ -29,5 +30,15 @@ module.exports = {
         logger.error(error);
       }
     })();
+
+    // Creates the table of the database
+    const db = new sqlite3.Database('./okazu.db');
+    db.run(`
+      CREATE TABLE IF NOT EXISTS images (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        data BLOB
+      )
+    `);
   },
 };

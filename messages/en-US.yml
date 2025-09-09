@@ -1,3 +1,7 @@
-error: '**There was an error while executing this command!**'
-hello: 'Hello.'
-helloDescription: 'Greet you with a reply.'
+error: "**There was an error while executing this command!**"
+wrongChannel: "**Please enter the command on the specified channel.**"
+hello: "Hello."
+helloDescription: "Greet you with a reply."
+addOkazu: "Added a jerk-off material successfully."
+showOkazu: "Provided today's jerk-off material."
+noOkazu: "No material was found. Please add materials with `/okazu add`."
