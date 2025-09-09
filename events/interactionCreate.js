@@ -1,5 +1,6 @@
 const { Events, MessageFlags } = require('discord.js');
 const log4js = require('log4js');
+const wait = require('node:timers/promises').setTimeout;
 const getMessage = require('../getMessage');
 
 const logger = log4js.getLogger('okazu-bot');
@@ -24,16 +25,13 @@ module.exports = {
       const errorMessage = getMessage('error')[interaction.locale]
         ?? 'There was an error while executing this command!';
 
-      if (interaction.replied || interaction.deferred) {
-        await interaction.followUp({
-          content: errorMessage,
-          flags: MessageFlags.Ephemeral
-        });
-      } else {
+      if (!interaction.replied && !interaction.deferred) {
         // Defer the reply to avoid Unknown interaction error.
         await interaction.deferReply({ flags: MessageFlags.Ephemeral });
-        await interaction.followUp(errorMessage);
       }
+      // Wait to avoid Unknown interaction error.
+      await wait(200);
+      await interaction.editReply(errorMessage);
     }
   },
 };
