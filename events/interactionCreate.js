@@ -1,5 +1,6 @@
 const { Events, MessageFlags } = require('discord.js');
 const log4js = require('log4js');
+const getMessage = require('../getMessage');
 
 const logger = log4js.getLogger('okazu-bot');
 
@@ -19,10 +20,20 @@ module.exports = {
       await command.execute(interaction);
     } catch (error) {
       logger.error(error);
+
+      const errorMessage = getMessage('error')[interaction.locale]
+        ?? 'There was an error while executing this command!';
+
       if (interaction.replied || interaction.deferred) {
-        await interaction.followUp({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
+        await interaction.followUp({
+          content: errorMessage,
+          flags: MessageFlags.Ephemeral
+        });
       } else {
-        await interaction.reply({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
+        await interaction.reply({
+          content: errorMessage,
+          flags: MessageFlags.Ephemeral
+        });
       }
     }
   },
