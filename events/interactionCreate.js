@@ -30,10 +30,9 @@ module.exports = {
           flags: MessageFlags.Ephemeral
         });
       } else {
-        await interaction.reply({
-          content: errorMessage,
-          flags: MessageFlags.Ephemeral
-        });
+        // Defer the reply to avoid Unknown interaction error.
+        await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+        await interaction.followUp(errorMessage);
       }
     }
   },
